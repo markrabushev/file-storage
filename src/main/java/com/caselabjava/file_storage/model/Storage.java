@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -20,16 +21,15 @@ public class Storage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "file_content")
+    @Column(name = "file")
     @Lob
-    private byte[] fileContent;
+    private String file;
 
     @Column(name = "title")
     private String title;
 
     @Column(name = "creation_date")
-    @CreationTimestamp
-    private Date creationDate;
+    private LocalDateTime creationDate;
 
     @Column(name = "description")
     private String description;
