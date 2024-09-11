@@ -20,6 +20,10 @@ public class Storage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "file_content")
+    @Lob
+    private byte[] fileContent;
+
     @Column(name = "title")
     private String title;
 
@@ -30,7 +34,4 @@ public class Storage {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "file_content")
-    @Lob
-    private byte[] fileContent;
 }
