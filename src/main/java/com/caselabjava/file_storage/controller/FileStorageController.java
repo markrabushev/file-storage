@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -25,17 +27,10 @@ public class FileStorageController {
     }
 
     @PostMapping(consumes="application/json")
-    public ResponseEntity<HashMap<String, String>> postTaco(@RequestBody Storage file) {
-        try {
-            HashMap<String, String> response = new HashMap<>();
-            response.put("id", storageRepository.save(file).getId().toString());
-            return new ResponseEntity<>(response, HttpStatus.CREATED);
-        } catch (DateTimeParseException e) {
-            HashMap<String, String> response = new HashMap<>();
-            response.put("error", "creationDate must be in format 2024-09-11T17:40:01");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(response);
-        }
+    public ResponseEntity<Map<String, String>> postTaco(@RequestBody Storage file) {
+        Map<String, String> response = new HashMap<>();
+        response.put("id", storageRepository.save(file).getId().toString());
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
@@ -48,9 +43,13 @@ public class FileStorageController {
     }
 
     @GetMapping
-    public Iterable<Storage> list() {
-        return storageRepository.findAll(PageRequest.of(0, 10,
+    public ResponseEntity<List<Storage>> list() {
+        List<Storage> list = storageRepository.findAll(PageRequest.of(0, 5,
                 Sort.by("creationDate").descending())).getContent();
+        if (!list.isEmpty()) {
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
 
