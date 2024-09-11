@@ -1,11 +1,8 @@
 package com.caselabjava.file_storage.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,14 +18,18 @@ public class Storage {
 
     @Column(name = "file")
     @Lob
+    @NotNull
     private String file;
 
+    @NotNull
     @Column(name = "title")
     private String title;
 
+    @NotNull
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
 
+    @NotNull
     @Column(name = "description")
     private String description;
 

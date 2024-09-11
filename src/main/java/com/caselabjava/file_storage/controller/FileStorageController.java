@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.format.DateTimeParseException;
+import java.util.HashMap;
 import java.util.Optional;
 
 @RestController
@@ -23,9 +25,17 @@ public class FileStorageController {
     }
 
     @PostMapping(consumes="application/json")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Integer postTaco(@RequestBody Storage file) {
-        return storageRepository.save(file).getId();
+    public ResponseEntity<HashMap<String, String>> postTaco(@RequestBody Storage file) {
+        try {
+            HashMap<String, String> response = new HashMap<>();
+            response.put("id", storageRepository.save(file).getId().toString());
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+        } catch (DateTimeParseException e) {
+            HashMap<String, String> response = new HashMap<>();
+            response.put("error", "creationDate must be in format 2024-09-11T17:40:01");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(response);
+        }
     }
 
     @GetMapping("/{id}")
