@@ -5,16 +5,14 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor(access= AccessLevel.PRIVATE, force=true)
-@Table(name = "file-storage")
+@Table(name = "file_storage")
 public class Storage {
 
     @Id
