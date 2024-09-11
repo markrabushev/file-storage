@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor(access= AccessLevel.PRIVATE, force=true)
 @Table(name = "file-storage")
-public class File {
+public class Storage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
